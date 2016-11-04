@@ -1,8 +1,45 @@
 import groovy.xml.MarkupBuilder
 
-println args
+def usage = """Usage:
+groovy cda_builder.groovy [1,2,3] header_file [options]
+ + level 1 options: body_content_file e.g. a PDF or image or plain text file
+ + level 2 options: body_section_texts
+ + level 3 options: body_section_texts (will generate sample entries for the sections)
+"""
+
+if (args.size() == 0)
+{
+   println usage
+   return 0
+}
+
+def level = 1
+
+try
+{
+   level = args[0].toInteger()
+   
+   if (!(level in 1..3))
+   {
+      println "arg ${args[0]} should be in 1..3"
+      println usage
+      return 0
+   }
+}
+catch (Exception e)
+{
+   println "Can't parse arg ${args[0]}"
+   println usage
+   return 0
+}
 
 /*
+usage:
+
+groovy cda_builder.groovy [1,2,3] header_file [options]
+ + level 1 options: body_content_file e.g. a PDF or image or plain text file
+ + level 2 options: body_section_texts
+ + level 3 options: body_section_texts (will generate sample entries for the sections)
 
 line 0:
  0 ClinicalDocument.code.code
@@ -34,10 +71,10 @@ line 2:
  9 ClinicalDocument.author.assignedAuthor.representedOrganization.name
 
 line 3:
- 0 ClinicalDocument.custodian
- 1 
- 2 
- 3 
+ 0 ClinicalDocument.custodian.assignedCustodian.representedCustodianOrganization.id.root
+ 1 ClinicalDocument.custodian.assignedCustodian.representedCustodianOrganization.name
+ 2 ClinicalDocument.custodian.assignedCustodian.representedCustodianOrganization
+ 3 ClinicalDocument.custodian.assignedCustodian.representedCustodianOrganization
  4 
  5 
  6 
@@ -51,11 +88,65 @@ Date.metaClass.static.nowString = { ->
    new Date().format("yyyyMMddhhmmss")
 }
 
-def header_file = new File(args[0])
+// Parse header data
+def header_file = new File(args[1])
+
+if (!header_file.exists())
+{
+   println "File ${header_file.path} doesn't exists"
+   return 0
+}
+
 def header_data_csv = header_file.text
 def header_data = header_data_csv.normalize().tokenize("\n")*.split(",") //*.trim()
 
 println header_data
+
+if (level == 1)
+{
+   if (args.size() < 3)
+   {
+      println "Missing body content file"
+      println usage
+      return 0
+   }
+
+   // Process body data
+   /*
+   def s = 'Argh, Groovy you say, mate?'
+    
+   String encoded = s.bytes.encodeBase64().toString()
+   assert 'QXJnaCwgR3Jvb3Z5IHlvdSBzYXksIG1hdGU/' == encoded
+    
+   byte[] decoded = encoded.decodeBase64()
+   assert s == new String(decoded)
+   */
+   def body_file =  new File(args[2]) // TODO: get the type of file to put the mime type in the body
+   
+   if (!body_file.exists())
+   {
+      println "File ${body_file.path} doesn't exists"
+      return 0
+   }
+
+   def body_bytes = body_file.bytes
+   def body_base_64 = body_bytes.encodeBase64().toString()
+
+   //println body_base_64
+
+   // This might not work and depends on the OS, try with two methods, then exception...
+   def content_type = java.net.URLConnection.guessContentTypeFromName(body_file.name)
+   if (!content_type) content_type = java.nio.file.Files.probeContentType(body_file.toPath())
+   if (!content_type) throw new Exception("Content type not found for file "+ args[1])
+
+   println content_type
+}
+else
+{
+   println "level 2 and level 3 are not supported yet"
+   return 0
+}
+
 
 // XML Builder Setup
 
@@ -93,22 +184,22 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
          }
       }
    }
-   /*
+   
    // Doctor
    author {
       time(Date.nowString())
       assignedAuthor {
-         id(root: header_data[][], extension: header_data[][])
+         id(root: header_data[2][6], extension: header_data[2][5])
          assignedPerson {
             name {
-               prefix(header_data[][])
-               given(header_data[][])
-               family(header_data[][])
+               prefix(header_data[2][0])
+               given(header_data[2][1])
+               family(header_data[2][3])
             }
          }
          representedOrganization {
-            id(root: header_data[][], extension: header_data[][])
-            name(header_data[][])
+            id(root: header_data[2][7], extension: header_data[2][8])
+            name(header_data[2][9])
          }
       }
    }
@@ -117,13 +208,16 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
    custodian {
       assignedCustodian {
          representedCustodianOrganization {
-            id(root: header_data[][])
-            name(header_data[][])
+            id(root: header_data[3][0])
+            name(header_data[3][1])
             // TODO: TEL, ADDR
          }
       }
    }
    
+   component {
+   }
+   /*
    // Body
    // TODO
    */
