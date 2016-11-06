@@ -102,6 +102,9 @@ def header_data = header_data_csv.normalize().tokenize("\n")*.split(",") //*.tri
 
 println header_data
 
+// Variables for the body
+def content_type, level_1_body_content, level_1_body_representation
+
 if (level == 1)
 {
    if (args.size() < 3)
@@ -112,12 +115,9 @@ if (level == 1)
    }
 
    // Process body data
-   /*
-   def s = 'Argh, Groovy you say, mate?'
-    
-   String encoded = s.bytes.encodeBase64().toString()
-   assert 'QXJnaCwgR3Jvb3Z5IHlvdSBzYXksIG1hdGU/' == encoded
-    
+   /* base 64 encode / undecode
+   def s = '....'
+   String encoded = s.bytes.encodeBase64().toString()    
    byte[] decoded = encoded.decodeBase64()
    assert s == new String(decoded)
    */
@@ -128,18 +128,27 @@ if (level == 1)
       println "File ${body_file.path} doesn't exists"
       return 0
    }
-
-   def body_bytes = body_file.bytes
-   def body_base_64 = body_bytes.encodeBase64().toString()
-
-   //println body_base_64
+   
 
    // This might not work and depends on the OS, try with two methods, then exception...
-   def content_type = java.net.URLConnection.guessContentTypeFromName(body_file.name)
+   content_type = java.net.URLConnection.guessContentTypeFromName(body_file.name)
    if (!content_type) content_type = java.nio.file.Files.probeContentType(body_file.toPath())
    if (!content_type) throw new Exception("Content type not found for file "+ args[1])
 
    println content_type
+   
+   if (content_type == 'text/plain')
+   {
+      level_1_body_content = body_file.text
+      level_1_body_representation = 'TXT'
+   }
+   else
+   {
+      def body_bytes = body_file.bytes
+      def body_base_64 = body_bytes.encodeBase64().toString()
+      level_1_body_content = body_base_64
+      level_1_body_representation = 'B64'
+   }
 }
 else
 {
@@ -164,7 +173,7 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
    id(root: String.uuid())
    code(code: header_data[0][0], codeSystem: header_data[0][1], displayName: header_data[0][2])
    title(header_data[0][3])
-   effectiveTime(Date.nowString())
+   effectiveTime(value: Date.nowString())
    confidentialityCode(code: "N", codeSystem: "2.16.840.1.113883.5.25")
    languageCode(code: header_data[0][4])
    setId(root: String.uuid())
@@ -187,7 +196,7 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
    
    // Doctor
    author {
-      time(Date.nowString())
+      time(value: Date.nowString())
       assignedAuthor {
          id(root: header_data[2][6], extension: header_data[2][5])
          assignedPerson {
@@ -198,7 +207,7 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
             }
          }
          representedOrganization {
-            id(root: header_data[2][7], extension: header_data[2][8])
+            id(root: header_data[2][8], extension: header_data[2][7])
             name(header_data[2][9])
          }
       }
@@ -215,14 +224,24 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
       }
    }
    
+   // Body level 1
    component {
+      nonXMLBody {
+         text(mediaType: content_type, representation: level_1_body_representation, level_1_body_content)
+      }
    }
-   /*
-   // Body
-   // TODO
-   */
 }
 
 def cda = writer.toString()
 
-println cda
+// Generates UTF-8 XML output
+
+def destination_path = '.'
+String PS = System.getProperty("file.separator")
+def out = new File( destination_path + PS + new java.text.SimpleDateFormat("yyyyMMddhhmmss'.xml'").format(new Date()) )
+printer = new java.io.PrintWriter(out, 'UTF-8')
+printer.write(cda)
+printer.flush()
+printer.close()
+
+println "CDA created "+ out.absolutePath
