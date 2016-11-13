@@ -37,13 +37,6 @@ new File('.' + File.separator).eachFileMatch(~/.*.xml/) { xml ->
   if (!validate(validator, xml.text ))
   {
      println i +") "+ xml.name +' NO VALIDA'
-     /*
-     println '====================================='
-     validator.errors.each {
-        println it
-     }
-     println '====================================='
-     */
   }
   else
   {
