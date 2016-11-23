@@ -7,8 +7,9 @@ groovy cda_builder.groovy [1,2,3] header_file [options]
  + level 3 options: body_section_texts (will generate sample entries for the sections)
 """
 
-if (args.size() == 0)
+if (args.size() < 2)
 {
+   println "Missing arguments..."
    println usage
    return 0
 }
@@ -104,50 +105,55 @@ println header_data
 
 // Variables for the body
 def content_type, level_1_body_content, level_1_body_representation
+def header_only = false
 
 if (level == 1)
 {
    if (args.size() < 3)
    {
-      println "Missing body content file"
-      println usage
-      return 0
-   }
-
-   // Process body data
-   /* base 64 encode / undecode
-   def s = '....'
-   String encoded = s.bytes.encodeBase64().toString()    
-   byte[] decoded = encoded.decodeBase64()
-   assert s == new String(decoded)
-   */
-   def body_file =  new File(args[2]) // TODO: get the type of file to put the mime type in the body
-   
-   if (!body_file.exists())
-   {
-      println "File ${body_file.path} doesn't exists"
-      return 0
-   }
-   
-
-   // This might not work and depends on the OS, try with two methods, then exception...
-   content_type = java.net.URLConnection.guessContentTypeFromName(body_file.name)
-   if (!content_type) content_type = java.nio.file.Files.probeContentType(body_file.toPath())
-   if (!content_type) throw new Exception("Content type not found for file "+ args[1])
-
-   println content_type
-   
-   if (content_type == 'text/plain')
-   {
-      level_1_body_content = body_file.text
-      level_1_body_representation = 'TXT'
+      println "Missing body content file, generating header only"
+      header_only = true
+      
+      //println usage
+      //return 0
    }
    else
    {
-      def body_bytes = body_file.bytes
-      def body_base_64 = body_bytes.encodeBase64().toString()
-      level_1_body_content = body_base_64
-      level_1_body_representation = 'B64'
+      // Process body data
+      /* base 64 encode / undecode
+      def s = '....'
+      String encoded = s.bytes.encodeBase64().toString()    
+      byte[] decoded = encoded.decodeBase64()
+      assert s == new String(decoded)
+      */
+      def body_file =  new File(args[2]) // TODO: get the type of file to put the mime type in the body
+      
+      if (!body_file.exists())
+      {
+         println "File ${body_file.path} doesn't exists"
+         return 0
+      }
+      
+
+      // This might not work and depends on the OS, try with two methods, then exception...
+      content_type = java.net.URLConnection.guessContentTypeFromName(body_file.name)
+      if (!content_type) content_type = java.nio.file.Files.probeContentType(body_file.toPath())
+      if (!content_type) throw new Exception("Content type not found for file "+ args[1])
+
+      //println content_type
+      
+      if (content_type == 'text/plain')
+      {
+         level_1_body_content = body_file.text
+         level_1_body_representation = 'TXT'
+      }
+      else
+      {
+         def body_bytes = body_file.bytes
+         def body_base_64 = body_bytes.encodeBase64().toString()
+         level_1_body_content = body_base_64
+         level_1_body_representation = 'B64'
+      }
    }
 }
 else
@@ -224,10 +230,13 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
       }
    }
    
-   // Body level 1
-   component {
-      nonXMLBody {
-         text(mediaType: content_type, representation: level_1_body_representation, level_1_body_content)
+   if (!header_only)
+   {
+      // Body level 1
+      component {
+         nonXMLBody {
+            text(mediaType: content_type, representation: level_1_body_representation, level_1_body_content)
+         }
       }
    }
 }
@@ -238,7 +247,7 @@ def cda = writer.toString()
 
 def destination_path = '.'
 String PS = System.getProperty("file.separator")
-def out = new File( destination_path + PS + new java.text.SimpleDateFormat("yyyyMMddhhmmss'.xml'").format(new Date()) )
+def out = new File( destination_path + PS + (header_only?'header_only_':'') + new java.text.SimpleDateFormat("yyyyMMddhhmmss'.xml'").format(new Date()) )
 printer = new java.io.PrintWriter(out, 'UTF-8')
 printer.write(cda)
 printer.flush()
