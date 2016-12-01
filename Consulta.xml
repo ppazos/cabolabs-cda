@@ -1,0 +1,91 @@
+﻿<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="CDA.xsl"?>
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:voc="urn:hl7-org:v3/voc">
+  <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040" />
+  <id root="412bdccb-1c18-4b43-8184-4b2210123455" />
+  <code code="11488-4" codeSystem="2.16.840.1.113883.6.1" displayName="Consult note" />
+  <title>Consulta</title>
+  <effectiveTime value="20161105103323" />
+  <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25" />
+  <languageCode code="es-UY" />
+  <setId root="aeaa2890-bc6f-44ac-b5a8-4179a456781c" />
+  <versionNumber value="1" />
+  <recordTarget>
+    <patientRole>
+      <id root="2.2.3.4.5" extension="1234567" />
+      <patient>
+        <name>
+          <given>Pablo</given>
+          <family>Pazos</family>
+        </name>
+        <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1" />
+        <birthTime value="19811024" />
+      </patient>
+    </patientRole>
+  </recordTarget>
+  <author>
+    <time value="20161105103323" />
+    <assignedAuthor>
+      <id root="2.3.3.5.6" extension="555666777" />
+      <assignedPerson>
+        <name>
+          <prefix>Dr.</prefix>
+          <given>Gregory</given>
+          <family>House</family>
+        </name>
+      </assignedPerson>
+      <representedOrganization>
+        <id root="2.5.8.9" extension="990088" />
+        <name>Hospital Central</name>
+      </representedOrganization>
+    </assignedAuthor>
+  </author>
+  <custodian>
+    <assignedCustodian>
+      <representedCustodianOrganization>
+        <id root="2.55.66.66.88" />
+        <name>Hospital Central</name>
+      </representedCustodianOrganization>
+    </assignedCustodian>
+  </custodian>
+  <component>
+    <structuredBody>
+      <component>
+        <section>
+          <code code="11450-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>PROBLEMAS (Nuevos)</title>
+          <text>
+            <list>
+              <item>DOLOR DE CABEZA (Activo)</item>
+              <item>MAREOS (Activo)</item>
+            </list>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <code code="8716-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Signos vitales</title>
+          <text>
+            <list>
+              <item>Presión arterial sistólica: 160 mmHg</item>
+              <item>Presión arterial diastólica: 110 mmHg</item>
+              <item>Peso: 104 Kg mmHg</item>
+              <item>Altura: 176 cm</item>
+              <item>IMC: 33.57</item>
+            </list>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <code code="51848-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Evaluación</title>
+          <text>
+            Presenta PA alta y sobrepeso ...
+          </text>
+        </section>
+      </component>
+    </structuredBody>
+  </component>
+</ClinicalDocument>
