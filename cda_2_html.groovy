@@ -7,7 +7,9 @@ groovy cda_2_html.groovy cda.xml
 
 if (args.size() == 0)
 {
+   println "\n"
    println usage
+   println "\n"
    return 0
 }
 
@@ -117,7 +119,16 @@ def make_table(html, table) {
   // TODO
 }
 
-def destination_path = '.'
+def destination_path = 'html'
+
+def destination = new File(destination_path)
+if (!destination.exists())
+{
+  println "\n"
+  println destination.absolutePath +" doesn't exists, trying to create it"
+  destination.mkdir()
+}
+
 String PS = System.getProperty("file.separator")
 def out = new File( destination_path + PS + new java.text.SimpleDateFormat("yyyyMMddhhmmss'.html'").format(new Date()) )
 printer = new java.io.PrintWriter(out, 'UTF-8')
@@ -125,4 +136,6 @@ printer.write(writer.toString())
 printer.flush()
 printer.close()
 
+println "\n"
 println "HTML created "+ out.absolutePath
+println "\n"
