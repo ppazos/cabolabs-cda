@@ -5,11 +5,12 @@ def usage = """Usage:
 groovy cda_2_html.groovy cda.xml
 """
 
+def start = System.currentTimeMillis()  
+
 if (args.size() == 0)
 {
    println "\n"
    println usage
-   println "\n"
    return 0
 }
 
@@ -136,6 +137,9 @@ printer.write(writer.toString())
 printer.flush()
 printer.close()
 
+def now = System.currentTimeMillis()  
+
 println "\n"
 println "HTML created "+ out.absolutePath
-println "\n"
+println "In ${now - start} ms"
+print "\n"
