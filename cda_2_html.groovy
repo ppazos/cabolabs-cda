@@ -125,9 +125,9 @@ def destination_path = 'html'
 def destination = new File(destination_path)
 if (!destination.exists())
 {
-  println "\n"
-  println destination.absolutePath +" doesn't exists, trying to create it"
-  destination.mkdir()
+   println "\n"
+   println destination.absolutePath +" doesn't exists, trying to create it"
+   destination.mkdir()
 }
 
 String PS = System.getProperty("file.separator")
@@ -137,7 +137,7 @@ printer.write(writer.toString())
 printer.flush()
 printer.close()
 
-def now = System.currentTimeMillis()  
+def now = System.currentTimeMillis()
 
 println "\n"
 println "HTML created "+ out.absolutePath
