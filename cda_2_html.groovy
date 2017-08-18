@@ -5,7 +5,7 @@ def usage = """Usage:
 groovy cda_2_html.groovy cda.xml
 """
 
-def start = System.currentTimeMillis()  
+def start = System.currentTimeMillis()
 
 if (args.size() == 0)
 {

@@ -14,7 +14,7 @@ def usage = """Usage:
 groovy cda_validator.groovy folder_with_cdas
 """
 
-def start = System.currentTimeMillis()  
+def start = System.currentTimeMillis()
 
 if (args.size() == 0)
 {
@@ -59,11 +59,11 @@ folder.eachFileMatch(~/.*.xml/) { xml ->
 
   if (!validate(validator, xml.text ))
   {
-     println i +") "+ xml.name +' NO VALIDA, error ^'
+     println i +") "+ xml.name +' NOT VALID, error ^'
   }
   else
   {
-     println i +") "+ xml.name +' VALIDA'
+     println i +") "+ xml.name +' VALID'
   }
   i++
 }
