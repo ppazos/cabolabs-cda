@@ -7,9 +7,11 @@ groovy cda_builder.groovy [1,2,3] header_file [options]
  + level 3 options: body_section_texts (will generate sample entries for the sections)
 """
 
+def start = System.currentTimeMillis()
+
 if (args.size() < 2)
 {
-   println "Missing arguments..."
+   println "\n"
    println usage
    return 0
 }
@@ -245,7 +247,16 @@ def cda = writer.toString()
 
 // Generates UTF-8 XML output
 
-def destination_path = '.'
+def destination_path = 'documents'
+
+def destination = new File(destination_path)
+if (!destination.exists())
+{
+   println "\n"
+   println destination.absolutePath +" doesn't exists, trying to create it"
+   destination.mkdir()
+}
+
 String PS = System.getProperty("file.separator")
 def out = new File( destination_path + PS + (header_only?'header_only_':'') + new java.text.SimpleDateFormat("yyyyMMddhhmmss'.xml'").format(new Date()) )
 printer = new java.io.PrintWriter(out, 'UTF-8')
@@ -253,4 +264,9 @@ printer.write(cda)
 printer.flush()
 printer.close()
 
-println "CDA created "+ out.absolutePath
+def now = System.currentTimeMillis()
+
+println ""
+println "CDA created at "+ out.absolutePath
+println "In ${now - start} ms"
+println ""
