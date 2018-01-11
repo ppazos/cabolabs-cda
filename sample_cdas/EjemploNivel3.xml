@@ -54,11 +54,11 @@
         <section>
           <code code="1111" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
           <title>Una observación</title>
-          <text>Frecuencia Cardiaca</text>
+          <text>Frecuencia Cardiaca 86 /min</text>
           <entry>
             <!-- Ver clase 2, slide 23 -->
             <observation classCode="OBS" moodCode="EVN">
-              <code code="364075005" codeSystem="2.16.840.1.113883.6.96" 
+              <code code="364075005" codeSystem="2.16.840.1.113883.6.96"
                     codeSystemName="SNOMED CT" displayName="Heart rate"/>
               <statusCode code="completed"/>
               <effectiveTime value="200004071430"/>
@@ -70,7 +70,7 @@
           </entry>
         </section>
       </component>
-      
+
       <component>
         <section>
           <code code="2222" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -84,7 +84,7 @@
           </entry>
         </section>
       </component>
-      
+
       <component>
         <section>
           <code code="10160-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -116,7 +116,7 @@
           </entry>
         </section>
       </component>
-      
+
       <component>
         <section>
           <code code="5555" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -139,7 +139,7 @@
           </entry>
         </section>
       </component>
-      
+
       <component>
         <section>
           <code code="29554-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -160,7 +160,7 @@
           </entry>
         </section>
       </component>
-      
+
       <component>
         <section>
           <code code="29554-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -182,7 +182,7 @@
           </entry>
         </section>
       </component>
-      
+
       <component>
         <section>
           <code code="474547" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -195,14 +195,14 @@
               <statusCode code="completed" />
               <component>
                 <observation classCode="OBS" moodCode="EVN">
-                  <code code="67867" codeSystem="2.16.840.1.113883.6.96" 
+                  <code code="67867" codeSystem="2.16.840.1.113883.6.96"
                         codeSystemName="SNOMED CT" displayName="Sistólica"/>
                   <value xsi:type="PQ" value="130" unit="mm[Hg]"/>
                 </observation>
               </component>
               <component>
                 <observation classCode="OBS" moodCode="EVN">
-                  <code code="67868" codeSystem="2.16.840.1.113883.6.96" 
+                  <code code="67868" codeSystem="2.16.840.1.113883.6.96"
                         codeSystemName="SNOMED CT" displayName="Diastólica"/>
                   <value xsi:type="PQ" value="90" unit="mm[Hg]"/>
                 </observation>
@@ -211,7 +211,7 @@
           </entry>
         </section>
       </component>
-          
+
     </structuredBody>
   </component>
 </ClinicalDocument>

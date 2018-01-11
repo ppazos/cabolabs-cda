@@ -50,11 +50,11 @@ html.html(lang:'es') {
           )
         }
       }
-      
+
       if (!cda.component.structuredBody.isEmpty()) {
-      
+
         cda.component.structuredBody.component.each { component ->
-        
+
           div(class: 'row') {
             div(class: 'col-md-12') {
               h3(component.section.title.text())
@@ -62,7 +62,7 @@ html.html(lang:'es') {
                 make_list(html, component.section.text.list)
               }
               else if (!component.section.text.table.isEmpty()) {
-                make_list(html, component.section.text.list)
+                make_table(html, component.section.text.list)
               }
               else {
                 span (

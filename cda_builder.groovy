@@ -21,7 +21,7 @@ def level = 1
 try
 {
    level = args[0].toInteger()
-   
+
    if (!(level in 1..3))
    {
       println "arg ${args[0]} should be in 1..3"
@@ -50,7 +50,7 @@ line 0:
  2 ClinicalDocument.code.displayName
  3 ClinicalDocument.title
  4 ClinicalDocument.languageCode.code
- 
+
 line 1:
  0 ClinicalDocument.recordTarget.patientRole.patient.name.given
  1 ClinicalDocument.recordTarget.patientRole.patient.name.given
@@ -78,9 +78,9 @@ line 3:
  1 ClinicalDocument.custodian.assignedCustodian.representedCustodianOrganization.name
  2 ClinicalDocument.custodian.assignedCustodian.representedCustodianOrganization
  3 ClinicalDocument.custodian.assignedCustodian.representedCustodianOrganization
- 4 
- 5 
- 6 
+ 4
+ 5
+ 6
 */
 
 String.metaClass.static.uuid = { ->
@@ -115,7 +115,7 @@ if (level == 1)
    {
       println "Missing body content file, generating header only"
       header_only = true
-      
+
       //println usage
       //return 0
    }
@@ -124,18 +124,18 @@ if (level == 1)
       // Process body data
       /* base 64 encode / undecode
       def s = '....'
-      String encoded = s.bytes.encodeBase64().toString()    
+      String encoded = s.bytes.encodeBase64().toString()
       byte[] decoded = encoded.decodeBase64()
       assert s == new String(decoded)
       */
       def body_file =  new File(args[2]) // TODO: get the type of file to put the mime type in the body
-      
+
       if (!body_file.exists())
       {
          println "File ${body_file.path} doesn't exists"
          return 0
       }
-      
+
 
       // This might not work and depends on the OS, try with two methods, then exception...
       content_type = java.net.URLConnection.guessContentTypeFromName(body_file.name)
@@ -143,7 +143,7 @@ if (level == 1)
       if (!content_type) throw new Exception("Content type not found for file "+ args[1])
 
       //println content_type
-      
+
       if (content_type == 'text/plain')
       {
          level_1_body_content = body_file.text
@@ -186,7 +186,7 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
    languageCode(code: header_data[0][4])
    setId(root: String.uuid())
    versionNumber(value: 1)
-   
+
    // Patient
    recordTarget {
       patientRole {
@@ -194,14 +194,16 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
          patient {
             name {
                given(header_data[1][0])
+               if (header_data[1][1]) given(header_data[1][1])
                family(header_data[1][2])
+               if (header_data[1][3]) family(header_data[1][3])
             }
             administrativeGenderCode(code: header_data[1][5], codeSystem: '2.16.840.1.113883.5.1')
             birthTime(value: header_data[1][4])
          }
       }
    }
-   
+
    // Doctor
    author {
       time(value: Date.nowString())
@@ -220,7 +222,7 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
          }
       }
    }
-   
+
    // Organization
    custodian {
       assignedCustodian {
@@ -231,7 +233,7 @@ root.ClinicalDocument( xmlns:      'urn:hl7-org:v3',
          }
       }
    }
-   
+
    if (!header_only)
    {
       // Body level 1
