@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="CDA.xsl"?>
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:voc="urn:hl7-org:v3/voc">
+
+  <!--
+  ================== ENCABEZADO CDA ==================
+  -->
+
+  <!-- UUID DEL DOCUMENTO-->
+  <id root="412bdccb-1c18-4b43-8184-4b2210123455" />
+  <code code="81222-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Consult note - recommended" />
+  <title>CONSULTA EXTERNA - ANAMESIS Y EXAMÉN FÍSICO (HCU.form002/MSP)</title>
+  <effectiveTime value="20161105103323-5" /> <!-- Incluir TZ -->
+  <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25" />
+  <realmCode code="EC"/>
+  <languageCode code="es" />
+  <!-- En caso de versiones este UUID permite agrupar documentos con sus versiones -->
+  <setId root="aeaa2890-bc6f-44ac-b5a8-4179a456781c" />
+  <versionNumber value="1" />
+  <recordTarget>
+    <patientRole>
+      <!-- extension se refiere al código identificador del paciente, no debería ser el número de cédula -->
+      <id root="2.2.3.4.5" extension="1751220110" /> <!-- todo: INEN definir OID -->
+      <!-- Esta sección no requiere ser transmitida -->
+      <patient>
+        <name>
+          <given>ABNER MATEO</given>
+          <family>MOLINA BANDA</family>
+        </name>
+        <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1" /> <!-- todo: catalogo SNOMED -->
+        <birthTime value="19891024"/>
+      </patient>
+    </patientRole>
+  </recordTarget>
+  <author>
+    <time value="20171005103323" />
+    <assignedAuthor>
+      <id root="2.3.3.5.6" extension="555666777" /><!-- todo: INEN definir OID maestro de TH -->
+      <assignedPerson>
+        <name>
+          <prefix>Dr.</prefix>
+          <given>Jonathan</given>
+          <family>Finlay</family>
+        </name>
+      </assignedPerson>
+      <representedOrganization>
+        <id root="2.5.8.9" extension="990088" /><!-- todo: INEN definir OID -->
+        <name>Hospital Eugenio Espejo</name>
+      </representedOrganization>
+    </assignedAuthor>
+  </author>
+  <custodian>
+    <assignedCustodian>
+      <representedCustodianOrganization>
+        <id root="2.55.66.66.88" />
+        <name>Hospital Eugenio Espejo</name>
+      </representedCustodianOrganization>
+    </assignedCustodian>
+  </custodian>
+
+  <!--
+  ================== CUERPO CDA ==================
+  -->
+
+  <component>
+    <!-- todo: revisar 81222-2 consultation note recommended -->
+    <structuredBody>
+      <component>
+        <section>
+          <code code="29298-7" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Reason for visit"/>
+          <title>1. MOTIVO DE CONSULTA</title>
+          <text>
+            CONTROL DE CRECIMIETNO Y DESARROLLO
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <!-- 2. ANTECEDENTES PERSONALES -->
+          <code code="11329-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                displayName="History General Narrative - Reported"/>
+          <title>2. ANTECEDENTE NARRATIVO</title>
+          <text>
+            ANTECEDENTE NARRATIVO
+          </text>
+          <component>
+            <section>
+              <code code="10155-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                    displayName="History of allergies, reported"/>
+              <title>ANTECEDENTE ALERGICO</title>
+              <text>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>TIPO ANTECEDENTE</th>
+                      <th>ANTECEDENTE</th>
+                      <th>DESCRIPCIÓN</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>ALIMENTOS</td>
+                      <td>GLUTEN</td>
+                      <td>DESDE SU NACIMIENTO</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </text>
+            </section>
+          </component>
+        </section>
+      </component>
+      <component>
+        <section>
+          <!-- 3. ANTECEDENTES FAMILIARES
+          10157-6  	History of family member diseases Narrative -->
+          <code code="10157-6" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                displayName="History of family member diseases Narrative"/>
+          <title>3. ANTECEDENTE FAMILIAR</title>
+          <text>
+            <table>
+              <thead>
+                <tr>
+                <th>TIPO ANTECEDENTE</th>
+                <th>ANTECEDENTE</th>
+                <th>DESCRIPCIÓN</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>NO EXISTEN ANTECEDENTES FAMILIARES REGISTRADOS</td>
+                </tr>
+              </tbody>
+            </table>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <!-- 4. ENFERMEDAD O PROBLEMA ACTUAL -->
+          <code code="10164-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                displayName="History of present illness narrative"/>
+          <title>4. ENFERMEDAD O PROBLEMA ACTUAL </title>
+          <text>PACIENTE DE 14 AÑOS DE EDAD, ACUDE A CONSULTA EXTERNA A CONTROL DE RUTINA, AL MOMENTO REFIERE DOLOR ABDOMINAL Y GASES ESTOMACALES</text>
+        </section>
+      </component>
+
+      <component>
+        <section>
+          <!-- 5. REVISIÓN DE ORGANOS Y SISTEMAS -->
+          <code code="11384-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                displayName="Phisical Examination of Organs"/>
+          <title>5. REVISIÓN DE ORGANOS Y SISTEMAS </title>
+          <text>
+            <table>
+              <thead>
+                <tr>
+                  <th>ÓRGANOS Y SISTEMAS</th>
+                  <th>EVIDENCIA PATOLÓGICA</th>
+                  <th>DESCRIPCIÓN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Órganos de os sentidos</td>
+                  <td>Sin patología</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Respiratorio</td>
+                  <td>Sin patología</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Digestivo</td>
+                  <td>Con patología</td>
+                  <td>HINCHAZON</td>
+                </tr>
+                <tr>
+                  <td>Urinario</td>
+                  <td>Sin patología</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Endocrino</td>
+                  <td>Sin patología</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <!-- todo: incorporar 34565-2 Vital signs, weight... -->
+          <code code="8716-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                displayName="Vital signs"/>
+          <title>6. SIGNOS VITALES Y ANTROPOMETICOS</title>
+          <text>
+            <list>
+              <item>Presión arterial sistólica: 160 mmHg</item>
+              <item>Presión arterial diastólica: 110 mmHg</item>
+              <item>Peso: 104 Kg mmHg</item>
+              <item>Altura: 176 cm</item>
+              <item>IMC: 33.57</item>
+            </list>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <!-- 7. EXAMEN FÍSICO -->
+          <code code="22029-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                displayName="Phisical exam narrative"/>
+          <title>7. EXAMEN FÍSICO </title>
+          <text>
+            <table>
+              <thead>
+                <tr>
+                  <th>REGIÓN ANATÓMICA</th>
+                  <th>EVIDENCIA PATOLÓGICA</th>
+                  <th>DESCRIPCIÓN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Epigastrio</td>
+                  <td>Sin patología</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Flanco o vacío izquierdo</td>
+                  <td>Con patología</td>
+                  <td>DOLOR</td>
+                </tr>
+                <tr>
+                  <td>Flanco o vacío derecho</td>
+                  <td>Sin patología</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </text>
+
+        </section>
+      </component>
+      <component>
+        <section>
+          <!-- 8. DIAGNOSTICOS -->
+          <code code="29548-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                displayName="Diagnosis Narrative"/>
+          <title> 8. DIAGNOSTICOS </title>
+          <text>
+            <table>
+              <thead>
+                <tr>
+                  <th>DIAGNOSTICOS</th>
+                  <th>CÓDIGO</th>
+                  <th>TIPO</th>
+                  <th>CONDICIÓN</th>
+                  <th>CRONOLOGÍA</th>
+                  <th>DESCRIPCIÓN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Otras gastritis agudas</td>
+                  <td>K291</td>
+                  <td>Morbilidad</td>
+                  <td>Presuntivo</td>
+                  <td>Primera</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Examen médico general</td>
+                  <td>Z000</td>
+                  <td>Prevención</td>
+                  <td></td>
+                  <td>Primera</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </text>
+
+        </section>
+      </component>
+
+      <component>
+        <section>
+          <!-- 9. PLAN DE TRATAMIENTO -->
+          <code code="80745-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                displayName="General medicine plan of care note"/>
+          <title>9. PLAN DE TRATAMIENTO</title>
+          <text>TEXTO NARRATIVO SOBRE EL PLAN DE TRATAMIENTO</text>
+          <component>
+            <section>
+              <!-- PRESCRIPCIONES -->
+            </section>
+          </component>
+          <component>
+            <section>
+              <!-- ÓRDENES DE LABORATORIO-->
+            </section>
+          </component>
+          <component>
+            <section>
+              <!-- ÓRDENES DE IMAGENEOLOGÍA -->
+            </section>
+          </component>
+          <component>
+            <section>
+              <!-- ÓRDENES DE HISTOPATOLOGÍA -->
+            </section>
+          </component>
+          <component>
+            <section>
+              <code code="47040-1" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                    displayName="Consultation 2nd opinion"/>
+              <title>INTERCONSULTA</title>
+              <text>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ESPECIALIDAD</th>
+                      <th>MÉDICO</th>
+                      <th>DESCRIPCIÓN</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Neurología</td>
+                      <td>JAIME EDUARDO ZAPATA</td>
+                      <td>PACIENTE DE 14 AÑOS, REFIERE DOLOR ABDOMINAL Y GASES ESTOMACALES</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </text>
+            </section>
+          </component>
+        </section>
+      </component>
+      <component>
+        <section>
+          <!-- 10. EVOLUCIÓN TODO: Código LOINC -->
+          <code code="" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                displayName=""/>
+          <title>10. EVOLUCIÓN</title>
+          <text>NOTA DE EVOLUCIÓN</text>
+
+        </section>
+      </component>
+      <component>
+        <section>
+          <!-- 11. PRESCRIPCIONES -->
+          <code code="57828-6" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"
+                displayName="Prescription list"/>
+          <title>11. PRESCRIPCIONES </title>
+          <text>
+            <table>
+              <thead>
+                <tr>
+                  <th>FECHA</th>
+                  <th>MEDICAMENTO</th>
+                  <th>VÍA ADM.</th>
+                  <th>FRECUENCIA</th>
+                  <th>DURACIÓN (DÍAS)</th>
+                  <th>MAÑANA</th>
+                  <th>MEDIODIA</th>
+                  <th>TARDE</th>
+                  <th>NOCHE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2017-07-10</td>
+                  <td>PARACETAMOL LIQUIDO ORAL 120mg/5ml NR</td>
+                  <td>ORAL</td>
+                  <td>Cada 6 horas</td>
+                  <td>5</td>
+                  <td>6:00</td>
+                  <td>12:00</td>
+                  <td>18:00</td>
+                  <td>00:00</td>
+                </tr>
+                <tr>
+                  <td colspan="9">INSTRUCCIONES: TOMAR 5 ml CADA 6 HORAS ON ESTOMAGO LLEGO</td>
+                </tr>
+                <tr>
+                  <td colspan="9">ADVERTENCIAS: EN CASO DE QUE NO BAJE LA FIEBRE, COLOCAR MEDIOS FÍSICOS DE AGUA TIBIA EN EL CUERPO</td>
+                </tr>
+              </tbody>
+            </table>
+          </text>
+        </section>
+      </component>
+    </structuredBody>
+  </component>
+</ClinicalDocument>
