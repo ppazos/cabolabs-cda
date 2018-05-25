@@ -73,6 +73,13 @@ html.html(lang:'es') {
           }
         }
       }
+      else {
+        if (cda.component.nonXMLBody.text.@mediaType.text() == 'text/plain') {
+          span (
+            cda.component.nonXMLBody.text.text()
+          )
+        }
+      }
     }
   }
 }
