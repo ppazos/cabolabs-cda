@@ -33,14 +33,14 @@
                 <xsl:comment>Updated by René Spronk, translate back to English-language labels</xsl:comment>
                 <xsl:comment>Updated by Dick Donker, Philips Medical Systems include linkHtml</xsl:comment>
                 <xsl:comment>Updated by Tony Schaller, medshare GmbH, for HL7 affiliate Switzerland</xsl:comment>
-                <xsl:comment xml:space="preserve">Updated by Alexander Henket, E.Novation B.V. 
+                <xsl:comment xml:space="preserve">Updated by Alexander Henket, E.Novation B.V.
                     - added meta tag that includes the encoding of the rendered document
-                    - changed/updated the BottomLine to include every header participation, except those behind Encounter 
-                    - changed "Attending physician" at the top of the document. Only displayed if available, and now includes 
+                    - changed/updated the BottomLine to include every header participation, except those behind Encounter
+                    - changed "Attending physician" at the top of the document. Only displayed if available, and now includes
                        Location if present too
-                    - added support for all? missing attributes from NarrativeBlock, including all styleCodes 
+                    - added support for all? missing attributes from NarrativeBlock, including all styleCodes
                     - added CSS class for inserted text with overline and underline and a tooltip
-                    - changed the way the title is retrieved by also checking ClinicalDocument/code/@displayName 
+                    - changed the way the title is retrieved by also checking ClinicalDocument/code/@displayName
                     - changed names and addresses so they follow all parts as present instead of a few in arbitrary order
                     - Lots of minor bug fixes
                     - Known issue: footNote/footNoteRef and most Acts on the header not supported
@@ -189,7 +189,7 @@
             </body>
         </html>
     </xsl:template>
-    
+
     <!-- Get from a code originalText, displayName or code -->
     <xsl:template match="n1:code" mode="getText">
         <xsl:choose>
@@ -203,7 +203,7 @@
                 <xsl:value-of select="@code"/>
             </xsl:otherwise>
         </xsl:choose>
-        
+
     </xsl:template>
 
     <!-- Get all IDs  -->
@@ -223,8 +223,8 @@
     </xsl:template>
 
     <!-- Get a Name  -->
-    <!-- 
-        20090415: (AH) Now handles data type as given in XML, including mixed content, 
+    <!--
+        20090415: (AH) Now handles data type as given in XML, including mixed content,
         instead of calling fixed parts in arbitrary order. It is also possible to activate
         a tooltip on the name that lists the IDs this person has. Deactivated that because
         it can be annoying when used in production.
@@ -334,6 +334,13 @@
                 <pre>
                     <xsl:value-of select="n1:text/text()"/>
                 </pre>
+            </xsl:when>
+            <xsl:when test="n1:text/@mediaType='application/pdf'">
+                <embed type="application/pdf" name="nonXMLBody" id="nonXMLBody" WIDTH="100%" HEIGHT="400" src="{n1:text/n1:reference/@value}">
+                    <xsl:attribute name="src">
+                        <xsl:text>data:application/pdf;base64,</xsl:text><xsl:value-of select="n1:text/text()"/>
+                    </xsl:attribute>
+                </embed>
             </xsl:when>
             <xsl:when test="n1:text/@mediaType='text/html'">
               <div WIDTH="100%" HEIGHT="66%">
@@ -581,8 +588,8 @@
         </caption>
     </xsl:template>
 
-    <!-- RenderMultiMedia 
-    
+    <!-- RenderMultiMedia
+
     this currently only handles GIF's and JPEG's.  It could, however,
     be extended by including other image MIME types in the predicate
     and/or by generating <object> or <applet> tag with the correct
@@ -869,9 +876,9 @@
     </xsl:template>
 
     <!-- addr -->
-    <!-- 
-        20090415: (AH) Now handles data type as given in XML, including mixed content, 
-        instead of calling fixed parts in arbitrary order. 
+    <!--
+        20090415: (AH) Now handles data type as given in XML, including mixed content,
+        instead of calling fixed parts in arbitrary order.
     -->
     <xsl:template match="n1:addr">
         <xsl:if test="position() > 1">
@@ -892,14 +899,14 @@
                     <br/>
                 </xsl:when>
                 <xsl:when
-                    test="((name() = 'houseNumber' or substring-after(name(),':') = 'houseNumber') or 
-                    (name() = 'additionalLocator' or substring-after(name(),':') = 'additionalLocator')) and 
+                    test="((name() = 'houseNumber' or substring-after(name(),':') = 'houseNumber') or
+                    (name() = 'additionalLocator' or substring-after(name(),':') = 'additionalLocator')) and
                     not(../n1:streetName)">
                     <xsl:value-of select="."/>
                     <br/>
                 </xsl:when>
                 <xsl:when
-                    test="((name() = 'houseNumber' or substring-after(name(),':') = 'houseNumber') or 
+                    test="((name() = 'houseNumber' or substring-after(name(),':') = 'houseNumber') or
                     (name() = 'additionalLocator' or substring-after(name(),':') = 'additionalLocator'))"/>
                 <xsl:when test="name() = 'city' or substring-after(name(),':') = 'city'">
                     <xsl:value-of select="."/>
